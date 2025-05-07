@@ -1,0 +1,568 @@
+### GET request to example server
+GET https://examples.http-client.intellij.net/get
+    ?generated-in=PyCharm
+
+###
+# === REGISTER ===
+### 1. Register un nouvel utilisateur
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+
+{
+  "full_name": "Joe Hugo Kennedy",
+  "email": "hugo@gamil.com",
+  "password": "Joe"
+}
+
+
+###
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+
+{
+  "full_name": "Sarah Janice Davis",
+  "email": "sarah@gamil.com",
+  "password": "Janice"
+}
+
+####
+
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+
+{
+  "full_name": "Alex Pierre",
+  "email": "pierre@example.com",
+  "password": "1234"
+}
+
+
+####
+
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+
+{
+  "full_name": "Missy Boby",
+  "email": "missy@example.com",
+  "password": "456m"
+}
+
+###
+# ==== LOGIN ====
+
+###
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "email": "pierre@example.com",
+  "password": "1234"
+}
+
+###
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "email": "sarah@gamil.com",
+  "password": "Janice"
+}
+
+
+###
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "email": "hugo@gamil.com",
+  "password": "Joe"
+}
+####
+
+###
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "email": "pierre@example.com",
+  "password": "1234"
+}
+
+
+### 2. Login utilisateur (récupération token)
+POST http://localhost:8000/auth/login
+Content-Type: application/json
+
+{
+  "email": "alice@example.com",
+  "password": "motdepasse123"
+}
+
+###
+
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "email": "missy@example.com",
+  "password": "456m"
+}
+
+###
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "email": "",
+  "password": "new1234"
+
+}
+
+###
+# ==== FORGOT-PASSWORD ====
+
+### Important ***
+### 3. Forgot Password
+POST http://localhost:8080/auth/forgot-password
+Content-Type: application/json
+
+{
+  "email": "dorzeaizzy@gmail.com"
+}
+
+###
+POST http://localhost:8080/auth/forgot-password
+Content-Type: application/json
+
+{
+  "email": "pierre@example.com"
+}
+
+###
+POST http://localhost:8080/auth/reset-password
+Content-Type: application/json
+
+{
+  "token": "jvvj90rn98724cqFw6DeNnaWK6cLVllDGcSsxFTkojM",
+  "new_password": "1234"
+}
+
+### 4. Reset Password (remplacer "TOKEN_ICI")
+POST http://localhost:8080/auth/reset-password
+Content-Type: application/json
+
+{
+  "token": "kxMkPDNelt0vu9NLbm3YxrNa1BLVWRKH5X1fXHOLYsA",
+  "new_password": "new1234"
+}
+
+
+###
+# ==== Cars ====
+
+### 🔐 Définir l'email de l'utilisateur courant
+@user_email = john.doe@example.com
+
+### ✅ POST - Ajouter une voiture
+POST http://localhost:8000/cars/
+Content-Type: application/json
+email: alice@example.com
+
+{
+  "brand": "Toyota",
+  "model": "Corolla",
+  "year": 2020,
+  "mileage": 45000
+}
+
+### 📥 GET - Lister toutes les voitures de l'utilisateur
+GET http://localhost:8000/cars/
+email: alice@example.com
+
+### 🛠️ PUT - Mettre à jour une voiture (remplace 1 par l'ID réel de la voiture)
+
+### 📥 GET - Lister toutes les voitures de l'utilisateur
+GET http://localhost:8000/cars/
+email: alice@example.com
+
+### 📥 GET - Lister toutes les voitures de l'utilisateur
+GET http://localhost:8000/cars/
+email: dorzeaizzy@gmail.com
+
+### PUT - Mise à jour voiture
+PUT http://localhost:8080/cars/6
+Content-Type: application/json
+email: alice@example.com
+
+{
+  "brand": "Renault",
+  "model": "Clio",
+  "year": 2019,
+  "mileage": 3000
+}
+
+###
+DELETE http://localhost:8080/cars/9
+email: dorzeaizzy@gmail.com
+
+###
+###
+DELETE http://localhost:8080/cars/4
+email: alice@example.com
+
+
+###
+POST http://localhost:8080/cars
+Content-Type: application/json
+email: dorzeaizzy@gmail.com
+
+{
+  "brand": "Toyota",
+  "model": "Camry",
+  "year": 2023,
+  "mileage": 15000
+}
+
+###
+POST http://localhost:8080/cars
+Content-Type: application/json
+email: dorzeaizzy@gmail.com
+
+{
+  "brand": "Honda",
+  "model": "Accord",
+  "year": 2022,
+  "mileage": 22000
+}
+
+
+###
+POST http://localhost:8080/cars
+Content-Type: application/json
+email: dorzeaizzy@gmail.com
+
+{
+  "brand": "Ford",
+  "model": "F-150",
+  "year": 2021,
+  "mileage": 25000
+}
+
+###
+POST http://localhost:8080/cars
+Content-Type: application/json
+email: dorzeaizzy@gmail.com
+
+{
+  "brand": "Chevrolet",
+  "model": "Malibu",
+  "year": 2020,
+  "mileage": 30000
+}
+
+###
+POST http://localhost:8000/cars/
+Content-Type: application/json
+email: pierre@example.com
+
+{
+  "brand": "Toyota",
+  "model": "Corolla",
+  "year": 2020,
+  "mileage": 45000
+}
+
+###
+GET http://localhost:8080/cars/
+email: pierre@example.com
+
+###
+POST http://localhost:8080/cars/
+Content-Type: application/json
+email: pierre@example.com
+
+{
+  "brand": "Honda",
+  "model": "Civic",
+  "year": 2019,
+  "mileage": 38000
+}
+
+
+###
+POST http://localhost:8080/cars/
+Content-Type: application/json
+email: pierre@example.com
+
+{
+  "brand": "Ford",
+  "model": "Focus",
+  "year": 2018,
+  "mileage": 52000
+}
+
+
+
+###
+POST http://localhost:8080/cars/
+Content-Type: application/json
+email: pierre@example.com
+
+{
+  "brand": "BMW",
+  "model": "320i",
+  "year": 2021,
+  "mileage": 27000
+}
+
+
+###
+POST http://localhost:8080/cars/
+Content-Type: application/json
+email: pierre@example.com
+
+{
+  "brand": "Audi",
+  "model": "A3",
+  "year": 2022,
+  "mileage": 15000
+}
+
+
+###
+POST http://localhost:8080/cars/
+Content-Type: application/json
+email: pierre@example.com
+
+{
+  "brand": "Mercedes",
+  "model": "A-Class",
+  "year": 2017,
+  "mileage": 61000
+}
+
+
+###
+POST http://localhost:8080/cars/
+Content-Type: application/json
+email: pierre@example.com
+
+{
+  "brand": "Volkswagen",
+  "model": "Golf",
+  "year": 2016,
+  "mileage": 68000
+}
+
+
+###
+POST http://localhost:8080/cars/
+Content-Type: application/json
+email: pierre@example.com
+
+{
+  "brand": "Peugeot",
+  "model": "208",
+  "year": 2020,
+  "mileage": 34000
+}
+
+###
+POST http://localhost:8080/cars/
+Content-Type: application/json
+email: missy@example.com
+
+{
+  "brand": "Mercedes",
+  "model": "A-Class",
+  "year": 2017,
+  "mileage": 61000
+}
+
+
+###
+POST http://localhost:8080/cars/
+Content-Type: application/json
+email: hugo@gamil.com
+
+{
+  "brand": "Audi",
+  "model": "A3",
+  "year": 2022,
+  "mileage": 15000
+}
+
+###
+POST http://localhost:8080/cars/
+Content-Type: application/json
+email: sarah@gamil.com
+
+{
+  "brand": "Volkswagen",
+  "model": "Golf",
+  "year": 2016,
+  "mileage": 68000
+}
+
+###
+
+
+# === SERVICE EVENT ===
+
+###
+POST http://localhost:8080/services/
+Content-Type: application/json
+email: dorzeaizzy@gmail.com
+
+{
+  "car_id": 12,
+  "service_type": "Bumper change",
+  "due_date": "2025-04-20",
+  "due_mileage": 190000
+}
+
+###
+POST http://localhost:8080/services/
+Content-Type: application/json
+email: dorzeaizzy@gmail.com
+
+{
+  "car_id": 11,
+  "service_type": "Light change",
+  "due_date": "2025-04-20",
+  "due_mileage": 400000
+}
+
+###
+PUT http://localhost:8080/services/13
+Content-Type: application/json
+email: dorzeaizzy@gmail.com
+
+{
+  "car_id": 12,
+  "service_type": "Bumper change",
+  "due_date": "2025-04-25",
+  "due_mileage": 50000
+}
+
+
+### POST - Create a new service event
+
+### ✅ Verify the response
+# After sending the PUT request, the service event should be updated with the new data.
+
+# === SERVICE HISTORY ===
+
+
+
+###
+# === NOTIFICATIONS ===
+
+
+### ❌ DELETE - Delete a notification (replace 1 with the actual ID)
+DELETE http://localhost:8080/notifications/4
+email: alice@example.com
+
+###
+GET http://localhost:8080/notifications/
+content-type: application/json
+email: alice@example.com
+
+
+###
+GET http://localhost:8080/notifications/
+content-type: application/json
+email: dorzeaizzy@gmail.com
+
+###
+POST  http://localhost:8080/notifications/
+Content-Type: application/json
+email: dorzeaizzy@gmail.com
+
+{
+   "car_id": 12,
+   "event_id":12,
+   "message": "Your Bumper has to change",
+   "notify_time": "2025-04-05 01:04:14.129322",
+   "is_sent": true
+
+}
+
+
+###
+POST  http://localhost:8080/notifications/
+Content-Type: application/json
+email: dorzeaizzy@gmail.com
+
+{
+   "car_id": 6,
+   "event_id":9,
+   "message": "You have to change the machine wheel",
+   "notify_time": "2025-04-05 01:04:14.129322",
+   "is_sent": true
+
+}
+
+
+###
+PUT http://localhost:8080/notifications/2
+Content-Type: application/json
+email: alice@example.com
+
+{
+   "car_id": 6,
+   "event_id":9,
+   "message": "You have to change the machine's coolers",
+   "notify_time": "2025-05-25 05:04:14.129322",
+   "is_sent": true
+
+}
+
+
+###
+# === USERS ===
+###
+GET http://localhost:8080/users/5
+content-type: application/json
+
+###
+GET http://localhost:8080/users/1
+content-type: application/json
+
+###
+GET http://localhost:8080/users/2/
+content-type: application/json
+
+###
+PUT /users/1/rename HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "full_name": "Izzy Charles"
+}
+
+
+###
+PUT /users/2/rename HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "full_name": "Alice Daisy Usher"
+}
+
+###
+PUT /users/4/rename HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "full_name": "Austin Pierre"
+}
+
+
+###
+DELETE /users/3 HTTP/1.1
+Host: localhost:8080
