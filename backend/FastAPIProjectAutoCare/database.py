@@ -1,3 +1,5 @@
+from urllib.parse import quote_plus
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 from sqlalchemy.exc import SQLAlchemyError
@@ -14,8 +16,8 @@ DATABASE_NAME = config.DATABASE_NAME
 
 # URL_DATABASE = 'postgresql://lysedorzea:1234@localhost:5434/AutoCare'
 # SQLALCHEMY_DATABASE_URL = f"postgresql://{DATABASE_USERNAME}:{DATABASE_PASSWORD}@{DATABASE_HOST}/{DATABASE_NAME}"
-
-SQLALCHEMY_DATABASE_URL = "postgresql://lysedorzea:1234@localhost:5434/AutoCare"
+password = quote_plus("!234Qwer")
+SQLALCHEMY_DATABASE_URL = f"postgresql://postgres:{password}@localhost:5432/AutoCare"
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

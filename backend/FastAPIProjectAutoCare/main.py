@@ -40,7 +40,14 @@ def read_root():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="127.0.0.1", port=8080, reload=True)
+    uvicorn.run("main:app", host="192.168.1.84", port=8080, reload=True)
+
+# host=
+# <cmd ->
+#   ipconfig + ENTER ->
+#       Адаптер беспроводной локальной сети Беспроводная сеть: IPv4-адрес>
+
+# Если этот адрес не работает, можно попробовать другие адреса (из ipconfig)
 
 
 # Vérifiez les logs complets du serveur :
