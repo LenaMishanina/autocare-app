@@ -32,5 +32,8 @@
     <string name="btn_ok">ОК</string>
     <string name="enter_psw">Введите пароль</string>
 
+    <!-- Добавление в календарь -->
+    <string name="btn_add">Добавить запись</string>
+
 
 </resources>

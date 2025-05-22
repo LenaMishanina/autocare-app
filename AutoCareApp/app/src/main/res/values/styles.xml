@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <style name="CalenderViewCustom" parent="android:Widget.CalendarView"> <!--        это цвет кружка и сегодняшнего числа-->
+        <item name="colorAccent">@color/lightBlue</item>
+        <item name="colorPrimary">@color/lightBlue</item>
+        <item name="android:textColorPrimary">@color/black</item> <!-- это цвет месяца-->
+    </style>
+
+    <style name="BottomNavigationStyle" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemHorizontalTranslationEnabled">false</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+</resources>
