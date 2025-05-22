@@ -10,7 +10,7 @@ abstract class BaseActivity : AppCompatActivity() {
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNavigationView.selectedItemId = selectedItemId
 
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+        bottomNavigationView.setOnItemSelectedListener { item ->
             val targetActivity = when (item.itemId) {
                 R.id.nav_calendar -> CalendarActivity::class.java
                 R.id.nav_history -> HistoryActivity::class.java

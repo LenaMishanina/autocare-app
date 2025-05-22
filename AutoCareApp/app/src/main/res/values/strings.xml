@@ -35,5 +35,13 @@
     <!-- Добавление в календарь -->
     <string name="btn_add">Добавить запись</string>
 
+    <!-- Названия для bottom_nav -->
+    <string name="item_calendar">Календарь</string>
+    <string name="item_history">История</string>
+
+    <!-- Названия для drawer_menu -->
+    <string name="nav_acc">Аккаунт</string>
+    <string name="nav_settings">Настройки</string>
+    <string name="nav_exit">Выйти</string>
 
 </resources>
