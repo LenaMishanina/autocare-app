@@ -15,18 +15,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        replaceFragment(CalendarFragment.newInstance())
+//        чтобы избежать дублирования при повороте экрана
+        if (savedInstanceState == null) {
+            replaceFragment(CalendarFragment())
+        }
 
         binding.bottomNavigationView.setOnItemSelectedListener {
-
-            when(it.itemId){
-                R.id.nav_calendar -> replaceFragment(CalendarFragment.newInstance())
-                R.id.nav_history -> replaceFragment(HistoryFragment.newInstance())
-                else -> {
-                    Toast.makeText(this, "error bottomNavigationView", Toast.LENGTH_SHORT).show()
-                }
+            when(it.itemId) {
+                R.id.nav_calendar -> replaceFragment(CalendarFragment())
+                R.id.nav_history -> replaceFragment(HistoryFragment())
+                else -> Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
             }
-
             true
         }
     }
@@ -37,7 +36,6 @@ class MainActivity : AppCompatActivity() {
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.mainFrameLayout,fragment)
         fragmentTransaction.commit()
-
 
     }
 }
