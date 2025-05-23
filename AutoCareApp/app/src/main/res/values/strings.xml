@@ -1,36 +1,34 @@
 <resources>
     <string name="app_name">AutoCareApp</string>
 
-    <!--  Регистрация пользователя  -->
-    <string name="stage_one">Этап 1</string>
-    <string name="reg_user_title">Регистрация пользователя</string>
-    <string name="enter_login">Введите логин</string>
-    <string name="enter_email">Введите почту</string>
-    <string name="confirm_psw">Подтвердите пароль</string>
-    <string name="do_you_have_account">есть аккаунт?</string>
+    <!--  fragment login  -->
+    <string name="title_login">Вход в аккаунт</string>
+    <string name="description_login">Заполните поля</string>
+    <string name="email">Email</string>
+    <string name="password">Пароль</string>
+    <string name="forget_pwd">Забыли пароль?</string>
+    <string name="btn_login">Выполнить вход</string>
+    <string name="required">Обязательное поле</string>
+    <string name="create_account">Создать аккаунт</string>
 
-    <!--  Регистрация автомобиля  -->
-    <string name="stage_two">Этап 2</string>
-    <string name="reg_auto_title">Регистрация автомобиля</string>
-    <string name="enter_brand">Введите марку</string>
-    <string name="enter_model">Введите модель</string>
-    <string name="enter_mileage">Введите пробег</string>
-    <string name="skip_reg_auto">пропустить шаг</string>
+    <!--  fragment register user  -->
+    <string name="title_reg_user">Регистрация</string>
+    <string name="name">Имя</string>
+    <string name="btn_reg_user">Зарегистрироваться</string>
+    <string name="have_account">Уже есть аккаунт?</string>
+    <!--  toast  -->
+    <string name="http_error_reg_user">Некорректные данные</string>
 
-    <!--  Вход в аккаунт  -->
-    <string name="login_title">Вход в аккаунт</string>
-    <string name="enter_login_or_email">Введите логин или почту</string>
-    <string name="don_t_remember_pwd">не помню пароль</string>
 
-    <!--  Восстановление и смена пароля  -->
-    <string name="pwd_recovery_title">Восстановление пароля</string>
-    <string name="change_pwd_title">Смена пароля</string>
-    <string name="enter_new_pwd">Введите новый пароль</string>
-    <string name="btn_recovery">Восстановить</string>
 
-    <!--  Общее  -->
-    <string name="btn_ok">ОК</string>
-    <string name="enter_psw">Введите пароль</string>
+    <!--  fragment register auto  -->
+    <string name="title_reg_auto">Ваш автомобиль</string>
+    <string name="brand">Марка</string>
+    <string name="model">Модель</string>
+    <string name="mileage">Пробег</string>
+    <string name="year">Год выпуска</string>
+    <string name="btn_reg_auto">Завершить</string>
+    <string name="skip_reg_auto">Пропустить шаг</string>
 
     <!-- Добавление в календарь -->
     <string name="btn_add">Добавить запись</string>

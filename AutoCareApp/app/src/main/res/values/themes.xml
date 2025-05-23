@@ -1,17 +1,29 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.AutoCareApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/primary_log_reg</item>
+        <item name="colorSecondary">@color/secondary_log_reg</item>
+
+        <!-- Button styles -->
+        <item name="materialButtonStyle">@style/Widget.AutoCareApp.Button</item>
+
+        <!-- Text styles -->
+        <item name="android:textViewStyle">@style/Widget.AutoCareApp.TextView</item>
+
+        <!-- EditText styles -->
+        <item name="editTextStyle">@style/Widget.AppCompat.EditText</item>
     </style>
 
-    <style name="Theme.AutoCareApp" parent="Base.Theme.AutoCareApp">
-        <item name="colorPrimary">@color/lightBlue</item>
-<!--        <item name="colorSecondary">@color/lightBlue</item>-->
+    <style name="Theme.AutoCareApp" parent="Base.Theme.AutoCareApp" />
+
+    <!-- Custom Button style -->
+    <style name="Widget.AutoCareApp.Button" parent="Widget.Material3.Button">
+        <item name="android:textColor">@color/primary_log_reg</item>
     </style>
 
-    <style name="Theme.Calendar" parent = "Theme.AppCompat.Light.NoActionBar">
-
+    <!-- Custom TextView style -->
+    <style name="Widget.AutoCareApp.TextView" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/primary_log_reg</item>
     </style>
 
 </resources>
