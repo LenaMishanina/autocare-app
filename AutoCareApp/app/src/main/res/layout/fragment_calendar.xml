@@ -14,29 +14,39 @@
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:theme="@style/CalenderViewCustom"
 
             />
-        <!-- Кнопка добавить запись-->
         <Button
             android:id="@+id/addEventButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/calendarView"
-            android:layout_margin="16dp"
             android:text="@string/btn_add"
+            android:textColor="@color/secondary_text_log_reg"
+            android:textStyle="bold"
             android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:id="@+id/emptyListText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/addEventButton"
+            android:layout_margin="16dp"
+            android:gravity="center"
+            android:text="Записей нет"
+            android:textSize="18sp"
+            android:visibility="gone"/>
 
         <ListView
             android:id="@+id/eventsListView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/addEventButton"
-            android:layout_margin="8dp" />
+            android:padding="4dp"
+            android:layout_margin="4dp" />
+        </RelativeLayout>
 
-
-    </RelativeLayout>
 
 
 </FrameLayout>
