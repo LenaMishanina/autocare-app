@@ -7,8 +7,22 @@
         <item name="android:textColorPrimary">@color/black</item> <!-- это цвет месяца-->
     </style>
 
+<!--    <style name="BottomNavigationStyle" parent="Widget.MaterialComponents.BottomNavigationView">-->
+<!--        <item name="itemHorizontalTranslationEnabled">false</item>-->
+<!--        <item name="android:layout_weight">1</item>-->
+<!--    </style>-->
+
     <style name="BottomNavigationStyle" parent="Widget.MaterialComponents.BottomNavigationView">
-        <item name="itemHorizontalTranslationEnabled">false</item>
-        <item name="android:layout_weight">1</item>
+        <item name="itemBackground">@drawable/bottom_nav_item_background</item>
+        <item name="itemTextColor">@color/bottom_nav_text_color</item>
+        <item name="itemIconTint">@color/bottom_nav_icon_color</item>
+        <item name="itemTextAppearanceActive">@style/BottomNavigationText</item>
+        <item name="itemTextAppearanceInactive">@style/BottomNavigationText</item>
     </style>
+
+    <style name="BottomNavigationText" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">14sp</item> <!-- Увеличьте размер по вашему желанию -->
+        <item name="android:textAllCaps">false</item> <!-- Опционально: убрать автоматические заглавные буквы -->
+    </style>
+
 </resources>

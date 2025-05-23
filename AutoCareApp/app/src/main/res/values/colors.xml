@@ -8,4 +8,16 @@
 
     <color name="primary_text_log_reg">#091318</color>
     <color name="secondary_text_log_reg">#eeeed9</color>
+
+
+    <!--  чтобы не ругалось на цвета даши  -->
+    <color name="lightBlue">#03A9F4</color>
+    <color name="buttonColor">#3F51B5</color>
+    <color name="darkGrey">#494444</color>
+
+
+    <!--  bottom nav  -->
+    <color name="bottom_nav_text_color">#EEEEEE</color>
+
+
 </resources>
