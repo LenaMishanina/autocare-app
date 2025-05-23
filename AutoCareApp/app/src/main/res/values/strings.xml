@@ -20,7 +20,6 @@
     <string name="http_error_reg_user">Некорректные данные</string>
 
 
-
     <!--  fragment register auto  -->
     <string name="title_reg_auto">Ваш автомобиль</string>
     <string name="brand">Марка</string>
@@ -31,7 +30,12 @@
     <string name="skip_reg_auto">Пропустить шаг</string>
 
     <!-- Добавление в календарь -->
+    <string name="your_car_toolbar">Машина</string>
     <string name="btn_add">Добавить запись</string>
+
+    <!--  heared  -->
+    <string name="your_login_Header">Логин</string>
+
 
     <!-- Названия для bottom_nav -->
     <string name="item_calendar">Календарь</string>
@@ -41,5 +45,12 @@
     <string name="nav_acc">Аккаунт</string>
     <string name="nav_settings">Настройки</string>
     <string name="nav_exit">Выйти</string>
+
+    <string name="open_nav">open main nav</string>
+    <string name="close_nav">close main nav</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

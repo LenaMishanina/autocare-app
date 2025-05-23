@@ -14,7 +14,7 @@
         <item name="editTextStyle">@style/Widget.AppCompat.EditText</item>
     </style>
 
-    <style name="Theme.AutoCareApp" parent="Base.Theme.AutoCareApp" />
+    <style name="Theme.AutoCareApp" parent="Base.Theme.AutoCareApp"/>
 
     <!-- Custom Button style -->
     <style name="Widget.AutoCareApp.Button" parent="Widget.Material3.Button">
@@ -25,5 +25,6 @@
     <style name="Widget.AutoCareApp.TextView" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/primary_log_reg</item>
     </style>
+
 
 </resources>
