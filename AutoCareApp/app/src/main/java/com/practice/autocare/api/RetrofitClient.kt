@@ -1,23 +1,31 @@
 package com.practice.autocare.api
 
+import com.practice.autocare.util.Constants.Companion.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object RetrofitClient {
-    val interceptor = HttpLoggingInterceptor()
-    //TODO interceptor.level = HttpLoggingInterceptor.Level.BODY
+class RetrofitClient {
+    companion object {
 
-    val client = OkHttpClient.Builder()
-        .addInterceptor(interceptor)
-        .build()
+        private val retrofit by lazy {
+            val interceptor = HttpLoggingInterceptor()
+            interceptor.level = HttpLoggingInterceptor.Level.BODY
 
-    val retrofit = Retrofit.Builder()
-        .baseUrl("https://127.0.0.1:8080")
-        .addConverterFactory(GsonConverterFactory.create())
-        .client(client)
-        .build()
+            val client = OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .build()
 
-    val mainApi = retrofit.create(AuthApi::class.java)
+            Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build()
+        }
+
+        val api by lazy {
+            retrofit.create(AuthApi::class.java)
+        }
+    }
 }
