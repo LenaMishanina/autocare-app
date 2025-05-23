@@ -1,5 +1,6 @@
 package com.practice.autocare.activities.auth
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.practice.autocare.R
+import com.practice.autocare.activities.main.MainActivity
 import com.practice.autocare.api.RetrofitClient.Companion.api
 import com.practice.autocare.databinding.FragmentLoginBinding
 import com.practice.autocare.models.auth.LoginRequest
@@ -78,7 +80,11 @@ class LoginFragment : Fragment() {
                     if (response.isSuccessful) {
                         saveUserEmail(loginRequest.email) // Сохраняем email (SharedPreferences)
                         Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
-//                      todo  MAIN.navController.navigate(R.id.action_loginFragment_to_calenderFragment)
+
+                        startActivity(Intent(requireContext(), MainActivity::class.java).apply {
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        })
+                        requireActivity().finish()
                     } else {
                         // Обработка HTTP ошибок (400, 500 и т.д.)
                         val errorMessage = response.errorBody()?.string() ?: "Login failed"
