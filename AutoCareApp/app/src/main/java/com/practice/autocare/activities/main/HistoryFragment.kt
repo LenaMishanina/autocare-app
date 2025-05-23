@@ -51,13 +51,10 @@ class HistoryFragment : Fragment() {
             setHasFixedSize(true)
         }
 
-        // Загрузка данных
-        val email = getUserEmail()
+        val email = getUserEmail(requireContext()) // Используем контекст фрагмента
         if (email != null) {
-            Log.d("TAG_History", email)
             getServices(email)
         } else {
-            Log.d("TAG_History", "email = null")
             showEmptyState(true)
         }
 

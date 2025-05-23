@@ -1,5 +1,7 @@
 package com.practice.autocare.activities.main
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
@@ -9,7 +11,9 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
 import com.practice.autocare.R
+import com.practice.autocare.activities.auth.StartActivity
 import com.practice.autocare.databinding.ActivityMainBinding
+import com.practice.autocare.util.Constants
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var binding: ActivityMainBinding
@@ -63,9 +67,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId) {
             R.id.nav_accSettings -> Toast.makeText(this, "посмотреть аккаунт", Toast.LENGTH_SHORT).show()
             R.id.nav_settings -> Toast.makeText(this, "посмотреть настройки", Toast.LENGTH_SHORT).show()
-            R.id.nav_exit -> Toast.makeText(this, "выйти из аккаунта", Toast.LENGTH_SHORT).show()
+            R.id.nav_exit -> logout()
         }
         binding.drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun logout() {
+        // Очищаем SharedPreferences
+        getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE)
+            .edit()
+            .remove(Constants.KEY_EMAIL)
+            .apply()
+
+        // Возвращаемся на StartActivity
+        startActivity(Intent(this, StartActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        })
+        finish()
     }
 }

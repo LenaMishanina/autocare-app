@@ -1,5 +1,6 @@
 package com.practice.autocare.activities.auth
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.practice.autocare.R
+import com.practice.autocare.activities.main.MainActivity
 import com.practice.autocare.api.RetrofitClient.Companion.api
 import com.practice.autocare.databinding.FragmentRegisterAutoBinding
 import com.practice.autocare.models.auth.RegisterAutoRequest
@@ -36,7 +38,7 @@ class RegisterAutoFragment : Fragment() {
 
 
         btnRegAuto.setOnClickListener {
-            getUserEmail()?.let { Log.d("TAG_AUTO", it) }
+            getUserEmail(requireContext())?.let { Log.d("TAG_AUTO", it) }
             if (brandEditText.text.isNullOrEmpty()) {
                 brandContainer.error = getString(R.string.required)
             } else if (modelEditText.text.isNullOrEmpty()) {
@@ -46,7 +48,7 @@ class RegisterAutoFragment : Fragment() {
             } else if (mileageEditText.text.isNullOrEmpty()) {
                 mileageContainer.error = getString(R.string.required)
             } else {
-                val email = getUserEmail()
+                val email = getUserEmail(requireContext())
                 if (email == null) {
                     Toast.makeText(context, "User email not found", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
@@ -64,8 +66,10 @@ class RegisterAutoFragment : Fragment() {
         }
 
         linkToCalendar.setOnClickListener {
-//          TODO  MAIN.navController.navigate(R.id.action_registerAutoFragment_to_CalendarFragment)
-            Toast.makeText(requireContext(), "переход на календарь без регистрации авто", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(requireContext(), com.practice.autocare.activities.main.MainActivity::class.java).apply {
+                flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK or android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
+            })
+            requireActivity().finish()
         }
 
         setupErrorClearingOnTextChanged(brandEditText, brandContainer)
@@ -92,7 +96,12 @@ class RegisterAutoFragment : Fragment() {
                 activity?.runOnUiThread {
                     if (response.isSuccessful) {
                         Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
-//                     TODO   MAIN.navController.navigate(R.id.action_registerAutoFragment_to_CalendarFragment)
+
+                        startActivity(Intent(requireContext(), MainActivity::class.java).apply {
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        })
+                        requireActivity().finish()
+
                     } else {
                         // Обработка HTTP ошибок (400, 500 и т.д.)
                         val errorMessage = response.errorBody()?.string() ?: "Registration failed"

@@ -6,6 +6,7 @@ import com.practice.autocare.models.auth.RegisterAutoResponse
 import com.practice.autocare.models.auth.RegisterUserRequest
 import com.practice.autocare.models.auth.RegisterUserResponse
 import com.practice.autocare.models.service.ServiceEventResponse
+import com.practice.autocare.models.service.ServiceRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -76,5 +77,21 @@ interface Api {
     @GET("services/")
     suspend fun getServiceEvents(
         @Header("email") email: String
+    ): Response<ArrayList<ServiceEventResponse>>
+
+
+//    POST http://localhost:8080/services/
+//    Content-Type: application/json
+//    email: dorzeaizzy@gmail.com
+//    {
+//        "car_id": 12,
+//        "service_type": "Bumper change",
+//        "due_date": "2025-04-20",
+//        "due_mileage": 190000
+//    }
+    @POST("services/")
+    suspend fun addServiceEvents(
+        @Header("email") email: String,
+        @Body serviceRequest: ServiceRequest
     ): Response<ArrayList<ServiceEventResponse>>
 }

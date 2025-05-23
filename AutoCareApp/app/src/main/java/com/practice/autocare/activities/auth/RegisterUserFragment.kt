@@ -79,7 +79,7 @@ class RegisterUserFragment : Fragment() {
 
                 activity?.runOnUiThread {
                     if (response.isSuccessful) {
-                        saveUserEmail(userRequest.email) // Сохраняем email (SharedPreferences)
+                        saveUserEmail(requireContext(), userRequest.email) // Сохраняем email (SharedPreferences)
                         Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
                         MAIN.navController.navigate(R.id.action_registerUserFragment_to_registerAutoFragment)
                     } else {
