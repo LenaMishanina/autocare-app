@@ -25,7 +25,7 @@ class RetrofitClient {
         }
 
         val api by lazy {
-            retrofit.create(AuthApi::class.java)
+            retrofit.create(Api::class.java)
         }
     }
 }

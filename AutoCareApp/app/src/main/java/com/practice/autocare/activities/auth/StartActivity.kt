@@ -6,7 +6,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.practice.autocare.R
 import com.practice.autocare.databinding.ActivityStartBinding
-import com.practice.autocare.util.Constants
+import com.practice.autocare.util.Constants.Companion.MAIN
 
 class StartActivity : AppCompatActivity() {
     private lateinit var binding: ActivityStartBinding
@@ -16,10 +16,10 @@ class StartActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityStartBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        MAIN = this
 
         navController = Navigation.findNavController(this, R.id.main_fragment)
 
-        Constants.MAIN = this
 
     }
 }

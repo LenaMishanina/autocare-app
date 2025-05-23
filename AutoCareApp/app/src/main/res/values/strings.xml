@@ -26,6 +26,7 @@
     <string name="brand">Марка</string>
     <string name="model">Модель</string>
     <string name="mileage">Пробег</string>
+    <string name="year">Год выпуска</string>
     <string name="btn_reg_auto">Завершить</string>
     <string name="skip_reg_auto">Пропустить шаг</string>
 

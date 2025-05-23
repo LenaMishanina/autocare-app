@@ -1,14 +1,21 @@
 package com.practice.autocare.activities.auth
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.practice.autocare.R
+import com.practice.autocare.api.RetrofitClient.Companion.api
 import com.practice.autocare.databinding.FragmentRegisterAutoBinding
-import com.practice.autocare.util.Constants
+import com.practice.autocare.models.auth.RegisterAutoRequest
+import com.practice.autocare.util.Constants.Companion.getUserEmail
+import com.practice.autocare.util.Constants.Companion.setupErrorClearingOnTextChanged
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class RegisterAutoFragment : Fragment() {
 
@@ -27,26 +34,44 @@ class RegisterAutoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) = with(binding) {
         super.onViewCreated(view, savedInstanceState)
 
+
         btnRegAuto.setOnClickListener {
+            getUserEmail()?.let { Log.d("TAG_AUTO", it) }
             if (brandEditText.text.isNullOrEmpty()) {
                 brandContainer.error = getString(R.string.required)
             } else if (modelEditText.text.isNullOrEmpty()) {
                 modelContainer.error = getString(R.string.required)
+            } else if (yearEditText.text.isNullOrEmpty()) {
+                yearContainer.error = getString(R.string.required)
             } else if (mileageEditText.text.isNullOrEmpty()) {
                 mileageContainer.error = getString(R.string.required)
             } else {
-                Toast.makeText(requireContext(), "OK", Toast.LENGTH_SHORT).show()
+                val email = getUserEmail()
+                if (email == null) {
+                    Toast.makeText(context, "User email not found", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                registerAuto(
+                    email,
+                    RegisterAutoRequest(
+                        brand = brandEditText.text.toString(),
+                        model = modelEditText.text.toString(),
+                        year = yearEditText.text.toString().toShort(),
+                        mileage = mileageEditText.text.toString().toInt(),
+                    )
+                )
             }
         }
 
         linkToCalendar.setOnClickListener {
-//            Constants.MAIN.navController.navigate(R.id.action_registerAutoFragment_to_CalendarFragment)
+//          TODO  MAIN.navController.navigate(R.id.action_registerAutoFragment_to_CalendarFragment)
             Toast.makeText(requireContext(), "переход на календарь без регистрации авто", Toast.LENGTH_SHORT).show()
         }
 
-        Constants.setupErrorClearingOnTextChanged(brandEditText, brandContainer)
-        Constants.setupErrorClearingOnTextChanged(modelEditText, modelContainer)
-        Constants.setupErrorClearingOnTextChanged(mileageEditText, mileageContainer)
+        setupErrorClearingOnTextChanged(brandEditText, brandContainer)
+        setupErrorClearingOnTextChanged(modelEditText, modelContainer)
+        setupErrorClearingOnTextChanged(yearEditText, yearContainer)
+        setupErrorClearingOnTextChanged(mileageEditText, mileageContainer)
     }
 
     override fun onDestroyView() {
@@ -57,6 +82,52 @@ class RegisterAutoFragment : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance() = RegisterAutoFragment()
+    }
+
+    private fun registerAuto(email: String, autoRequest: RegisterAutoRequest) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = api.registerAuto(email, autoRequest)
+
+                activity?.runOnUiThread {
+                    if (response.isSuccessful) {
+                        Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
+//                     TODO   MAIN.navController.navigate(R.id.action_registerAutoFragment_to_CalendarFragment)
+                    } else {
+                        // Обработка HTTP ошибок (400, 500 и т.д.)
+                        val errorMessage = response.errorBody()?.string() ?: "Registration failed"
+                        Log.e("TAG_Reg", errorMessage)
+                        Toast.makeText(context, getString(R.string.http_error_reg_user), Toast.LENGTH_LONG).show()
+                    }
+                }
+            } catch (e: Exception) {
+                activity?.runOnUiThread {
+                    when (e) {
+                        is java.net.ConnectException -> {
+                            Toast.makeText(
+                                context,
+                                "Cannot connect to server. Please check your internet connection",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                        is java.net.SocketTimeoutException -> {
+                            Toast.makeText(
+                                context,
+                                "Connection timeout. Please try again",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                        else -> {
+                            Toast.makeText(
+                                context,
+                                "An error occurred: ${e.localizedMessage}",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+                }
+            }
+        }
     }
 
 }

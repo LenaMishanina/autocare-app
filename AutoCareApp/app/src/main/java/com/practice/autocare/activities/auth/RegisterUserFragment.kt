@@ -13,6 +13,7 @@ import com.practice.autocare.databinding.FragmentRegisterUserBinding
 import com.practice.autocare.models.auth.RegisterUserRequest
 import com.practice.autocare.util.Constants.Companion.setupErrorClearingOnTextChanged
 import com.practice.autocare.util.Constants.Companion.MAIN
+import com.practice.autocare.util.Constants.Companion.saveUserEmail
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -78,6 +79,7 @@ class RegisterUserFragment : Fragment() {
 
                 activity?.runOnUiThread {
                     if (response.isSuccessful) {
+                        saveUserEmail(userRequest.email) // Сохраняем email (SharedPreferences)
                         Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
                         MAIN.navController.navigate(R.id.action_registerUserFragment_to_registerAutoFragment)
                     } else {
@@ -116,20 +118,5 @@ class RegisterUserFragment : Fragment() {
             }
         }
     }
-
-//    private fun registerUser(userRequest: RegisterUserRequest) = with(binding) {
-//        CoroutineScope(Dispatchers.IO).launch {
-//            val response = api.registerUser(userRequest)
-//
-//            activity?.runOnUiThread {
-//                if (response.isSuccessful) {
-//                    Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
-//                    MAIN.navController.navigate(R.id.action_registerUserFragment_to_registerAutoFragment)
-//                } else {
-//                    Toast.makeText(context, "Fail", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//        }
-//    }
 
 }
