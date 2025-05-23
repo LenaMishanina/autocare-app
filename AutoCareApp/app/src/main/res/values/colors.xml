@@ -3,5 +3,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="link">#8E8989</color>
+    <color name="primary_log_reg">#0a263c</color>
+    <color name="secondary_log_reg">#3861d5</color>
+
+    <color name="primary_text_log_reg">#091318</color>
+    <color name="secondary_text_log_reg">#eeeed9</color>
 </resources>
