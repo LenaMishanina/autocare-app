@@ -5,8 +5,10 @@ import com.practice.autocare.models.auth.RegisterAutoRequest
 import com.practice.autocare.models.auth.RegisterAutoResponse
 import com.practice.autocare.models.auth.RegisterUserRequest
 import com.practice.autocare.models.auth.RegisterUserResponse
+import com.practice.autocare.models.service.ServiceEventResponse
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
@@ -49,4 +51,30 @@ interface Api {
     suspend fun login(
         @Body loginRequest: LoginRequest
     ): Response<RegisterUserResponse>
+
+
+//    GET http://192.168.1.84:8080/services/
+//    Content-Type: application/json
+//    email: wars@a.a
+//    [
+//    {
+//        "car_id": 1,
+//        "service_type": "Light change",
+//        "due_date": "2025-04-20",
+//        "due_mileage": 400000.0,
+//        "event_id": 1
+//    },
+//          ...
+//    {
+//        "car_id": 1,
+//        "service_type": "boba fett",
+//        "due_date": "2023-05-25",
+//        "due_mileage": 23789.0,
+//        "event_id": 4
+//    }
+//    ]
+    @GET("services/")
+    suspend fun getServiceEvents(
+        @Header("email") email: String
+    ): Response<ArrayList<ServiceEventResponse>>
 }

@@ -18,6 +18,7 @@
     <string name="have_account">Уже есть аккаунт?</string>
     <!--  toast  -->
     <string name="http_error_reg_user">Некорректные данные</string>
+    <string name="http_error_service">Не удалось получить данные</string>
 
 
     <!--  fragment register auto  -->
