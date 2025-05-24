@@ -71,7 +71,7 @@ def forgot_password(data: ForgotPasswordRequest, db: Session = Depends(get_db)):
 
     # TODO: envoyer email ici
     print(f"[DEBUG] Reset token for {user.email}: {token}")
-    return {"message": "Password reset token has been sent."}
+    return {"message": "Password reset token has been sent.","reset_token": token}
 
 
 @router.post("/reset-password")
