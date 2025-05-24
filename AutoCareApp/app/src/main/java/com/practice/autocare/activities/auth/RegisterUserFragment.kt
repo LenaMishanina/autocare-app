@@ -13,6 +13,7 @@ import com.practice.autocare.databinding.FragmentRegisterUserBinding
 import com.practice.autocare.models.auth.RegisterUserRequest
 import com.practice.autocare.util.Constants.Companion.setupErrorClearingOnTextChanged
 import com.practice.autocare.util.Constants.Companion.MAIN
+import com.practice.autocare.util.Constants.Companion.handleNetworkError
 import com.practice.autocare.util.Constants.Companion.saveUserEmail
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -80,7 +81,6 @@ class RegisterUserFragment : Fragment() {
                 activity?.runOnUiThread {
                     if (response.isSuccessful) {
                         saveUserEmail(requireContext(), userRequest.email) // Сохраняем email (SharedPreferences)
-                        Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
                         MAIN.navController.navigate(R.id.action_registerUserFragment_to_registerAutoFragment)
                     } else {
                         // Обработка HTTP ошибок (400, 500 и т.д.)
@@ -91,29 +91,7 @@ class RegisterUserFragment : Fragment() {
                 }
             } catch (e: Exception) {
                 activity?.runOnUiThread {
-                    when (e) {
-                        is java.net.ConnectException -> {
-                            Toast.makeText(
-                                context,
-                                "Cannot connect to server. Please check your internet connection",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                        is java.net.SocketTimeoutException -> {
-                            Toast.makeText(
-                                context,
-                                "Connection timeout. Please try again",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                        else -> {
-                            Toast.makeText(
-                                context,
-                                "An error occurred: ${e.localizedMessage}",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    }
+                    handleNetworkError(requireContext(), e)
                 }
             }
         }

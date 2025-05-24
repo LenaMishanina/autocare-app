@@ -14,6 +14,7 @@ import com.practice.autocare.api.RetrofitClient.Companion.api
 import com.practice.autocare.databinding.FragmentRegisterAutoBinding
 import com.practice.autocare.models.auth.RegisterAutoRequest
 import com.practice.autocare.util.Constants.Companion.getUserEmail
+import com.practice.autocare.util.Constants.Companion.handleNetworkError
 import com.practice.autocare.util.Constants.Companion.setupErrorClearingOnTextChanged
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -95,7 +96,6 @@ class RegisterAutoFragment : Fragment() {
 
                 activity?.runOnUiThread {
                     if (response.isSuccessful) {
-                        Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
 
                         startActivity(Intent(requireContext(), MainActivity::class.java).apply {
                             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -111,29 +111,7 @@ class RegisterAutoFragment : Fragment() {
                 }
             } catch (e: Exception) {
                 activity?.runOnUiThread {
-                    when (e) {
-                        is java.net.ConnectException -> {
-                            Toast.makeText(
-                                context,
-                                "Cannot connect to server. Please check your internet connection",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                        is java.net.SocketTimeoutException -> {
-                            Toast.makeText(
-                                context,
-                                "Connection timeout. Please try again",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                        else -> {
-                            Toast.makeText(
-                                context,
-                                "An error occurred: ${e.localizedMessage}",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    }
+                    handleNetworkError(requireContext(), e)
                 }
             }
         }
