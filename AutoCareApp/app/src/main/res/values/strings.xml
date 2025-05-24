@@ -30,6 +30,14 @@
     <string name="btn_reg_auto">Завершить</string>
     <string name="skip_reg_auto">Пропустить шаг</string>
 
+    <!--  fragment forgot pwd  -->
+    <string name="title_recover_pwd">Восстановление пароля</string>
+    <string name="btn_get_token">Получить токен</string>
+    <string name="token">Временный токен</string>
+    <string name="new_pwd">Новый пароль</string>
+    <string name="btn_new_pwd">Изменить пароль</string>
+
+
     <!-- Добавление в календарь -->
     <string name="your_car_toolbar">Машина</string>
     <string name="btn_add">Добавить запись</string>

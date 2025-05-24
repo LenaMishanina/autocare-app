@@ -1,10 +1,16 @@
 package com.practice.autocare.util
 
 import android.content.Context
+import android.util.Log
+import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.practice.autocare.activities.auth.StartActivity
+import com.practice.autocare.models.service.ServiceEventResponse
+import retrofit2.Response
+import java.net.ConnectException
+import java.net.SocketTimeoutException
 
 class Constants {
     companion object {
@@ -21,6 +27,16 @@ class Constants {
                 }
             }
         }
+
+        fun handleNetworkError(context: Context, e: Exception) {
+            val message = when (e) {
+                is ConnectException -> "Нет подключения к серверу"
+                is SocketTimeoutException -> "Таймаут соединения"
+                else -> "Ошибка: ${e.localizedMessage}"
+            }
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+        }
+
 
 
         const val PREFS_NAME = "AutoCarePrefs"

@@ -1,5 +1,5 @@
 package com.practice.autocare.models.service
 
-data class DeleteResponse(
+data class MessageResponse(
     val message: String
 )

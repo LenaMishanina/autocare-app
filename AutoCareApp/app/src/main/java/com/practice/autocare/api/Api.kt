@@ -1,12 +1,15 @@
 package com.practice.autocare.api
 
+import com.practice.autocare.models.auth.ForgotPasswordRequest
+import com.practice.autocare.models.auth.ForgotPasswordResponse
 import com.practice.autocare.models.auth.LoginRequest
 import com.practice.autocare.models.auth.RegisterAutoRequest
 import com.practice.autocare.models.auth.RegisterAutoResponse
 import com.practice.autocare.models.auth.RegisterUserRequest
 import com.practice.autocare.models.auth.RegisterUserResponse
+import com.practice.autocare.models.auth.ResetPasswordRequest
 import com.practice.autocare.models.service.CarResponse
-import com.practice.autocare.models.service.DeleteResponse
+import com.practice.autocare.models.service.MessageResponse
 import com.practice.autocare.models.service.ServiceEventResponse
 import com.practice.autocare.models.service.ServiceEventResponseComp
 import com.practice.autocare.models.service.ServiceRequest
@@ -16,7 +19,6 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
-import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
@@ -61,6 +63,27 @@ interface Api {
         @Body loginRequest: LoginRequest
     ): Response<RegisterUserResponse>
 
+//    POST http://localhost:8080/auth/forgot-password
+//    Content-Type: application/json
+//    {
+//        "email": "dorzeaizzy@gmail.com"
+//    }
+    @POST("auth/forgot-password")
+    suspend fun forgotPwd(
+        @Body emailRequest: ForgotPasswordRequest
+    ): Response<ForgotPasswordResponse>
+
+
+//    POST http://localhost:8080/auth/reset-password
+//    Content-Type: application/json
+//    {
+//        "token": "jvvj90rn98724cqFw6DeNnaWK6cLVllDGcSsxFTkojM",
+//        "new_password": "1234"
+//    }
+    @POST("auth/reset-password")
+    suspend fun resetPwd(
+        @Body resetPwdRequest: ResetPasswordRequest
+    ): Response<MessageResponse>
 
 //    GET http://192.168.1.84:8080/services/
 //    Content-Type: application/json
@@ -114,7 +137,7 @@ interface Api {
     suspend fun deleteServiceEvents(
         @Header("email") email: String,
         @Path("event_id") eventId: Int
-    ): Response<DeleteResponse>
+    ): Response<MessageResponse>
 
 
 //    GET http://localhost:8080/cars
