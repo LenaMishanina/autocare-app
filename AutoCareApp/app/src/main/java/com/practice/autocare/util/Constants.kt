@@ -23,18 +23,18 @@ class Constants {
         }
 
 
-        private const val PREFS_NAME = "AutoCarePrefs"
-        private const val KEY_EMAIL = "user_email"
+        const val PREFS_NAME = "AutoCarePrefs"
+        const val KEY_EMAIL = "user_email"
 
-        fun saveUserEmail(email: String) {
-            MAIN.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        fun saveUserEmail(context: Context, email: String) {
+            context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
                 .edit()
                 .putString(KEY_EMAIL, email)
                 .apply()
         }
 
-        fun getUserEmail(): String? {
-            return MAIN.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        fun getUserEmail(context: Context): String? {
+            return context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
                 .getString(KEY_EMAIL, null)
         }
     }

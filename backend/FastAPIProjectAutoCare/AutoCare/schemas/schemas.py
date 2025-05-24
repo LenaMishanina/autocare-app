@@ -88,6 +88,8 @@ class ServiceEventCreate(ServiceEventBase):
 
 class ServiceEventResponse(ServiceEventBase):
     event_id: int
+    is_completed: bool  # Добавляем это поле, так как оно есть в модели
+    due_date: date
     # service_history: list[ServiceHistoryResponse]
 
     # Added event_id to match response format

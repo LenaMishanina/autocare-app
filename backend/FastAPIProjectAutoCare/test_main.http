@@ -414,7 +414,6 @@ email: sarah@gamil.com
 POST http://localhost:8080/services/
 Content-Type: application/json
 email: dorzeaizzy@gmail.com
-
 {
   "car_id": 12,
   "service_type": "Bumper change",

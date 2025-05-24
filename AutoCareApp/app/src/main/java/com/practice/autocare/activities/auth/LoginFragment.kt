@@ -78,7 +78,9 @@ class LoginFragment : Fragment() {
 
                 activity?.runOnUiThread {
                     if (response.isSuccessful) {
-                        saveUserEmail(loginRequest.email) // Сохраняем email (SharedPreferences)
+                        // Используем контекст фрагмента
+                        saveUserEmail(requireContext(), loginRequest.email)
+
                         Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
 
                         startActivity(Intent(requireContext(), MainActivity::class.java).apply {
