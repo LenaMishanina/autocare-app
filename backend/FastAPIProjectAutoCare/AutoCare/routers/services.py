@@ -4,8 +4,8 @@ from AutoCare.models.models import User, ServiceEvent, ServiceHistory, Car
 from AutoCare.schemas.schemas import ServiceEventCreate, ServiceHistoryCreate, ServiceEventResponse,UpdateEventSchema, ServiceHistoryResponse
 from database import get_db
 from dependencies import get_current_user
-
-
+from typing import Optional
+from datetime import date
 
 
 router = APIRouter(prefix="/services", tags=["services"])
@@ -28,9 +28,32 @@ def add_service_event(data: ServiceEventCreate, db: Session = Depends(get_db), u
     return service_event
 
 
+# GET http://192.168.1.84:8080/services/?due_date=2025-05-30&is_completed=false
+# Content-Type: application/json
+# email: dorzeaizzy@gmail.com
+@router.get("/", response_model=list[ServiceEventResponse])
+def get_service_events(
+        due_date: Optional[date] = None,
+        is_completed: Optional[bool] = None,
+        db: Session = Depends(get_db),
+        current_user: User = Depends(get_current_user)
+):
+    query = db.query(ServiceEvent).join(Car).filter(Car.user_id == current_user.user_id)
+
+    if due_date is not None:
+        print(f"Applying filter for due_date: {due_date}")
+        query = query.filter(ServiceEvent.due_date == due_date)
+
+    if is_completed is not None:
+        print(f"Applying filter for is_completed: {is_completed}")
+        query = query.filter(ServiceEvent.is_completed == is_completed)
+
+    return query.all()
+
 # GET - Retrieve all service events for the current user
 @router.get("/", response_model=list[ServiceEventResponse])
 def get_service_events(db: Session = Depends(get_db), user=Depends(get_current_user)):
+    print("it's me")
     return db.query(ServiceEvent).join(Car).filter(Car.user_id == user.user_id).all()
 
 # DELETE - Delete a service event by ID
