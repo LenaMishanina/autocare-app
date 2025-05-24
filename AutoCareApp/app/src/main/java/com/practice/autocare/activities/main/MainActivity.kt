@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -13,8 +14,14 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
 import com.practice.autocare.R
 import com.practice.autocare.activities.auth.StartActivity
+import com.practice.autocare.api.RetrofitClient.Companion.api
 import com.practice.autocare.databinding.ActivityMainBinding
 import com.practice.autocare.util.Constants
+import com.practice.autocare.util.Constants.Companion.getUserEmail
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var binding: ActivityMainBinding
@@ -26,9 +33,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
+        val email = getUserEmail(this)
 
         setSupportActionBar(binding.mainToolbar)
-        // todo setSupportActionBar?.title = машина пользователя (марка и модель)
+        if (email != null)
+            loadUserCar(email)
 
         binding.navView.setNavigationItemSelectedListener(this)
         val toggle = ActionBarDrawerToggle(
@@ -51,7 +60,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             when(it.itemId) {
                 R.id.nav_calendar -> replaceFragment(CalendarFragment())
                 R.id.nav_history -> replaceFragment(HistoryFragment())
-                else -> Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
             }
             true
         }
@@ -89,4 +97,32 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         })
         finish()
     }
+
+    private fun loadUserCar(userEmail: String) {
+        if (userEmail.isBlank()) return
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = api.getCars(userEmail)
+                withContext(Dispatchers.Main) {
+                    if (response.isSuccessful) {
+                        val cars = response.body()
+                        cars?.firstOrNull()?.let { car ->
+                            // Устанавливаем марку и модель в Toolbar
+                            binding.mainToolbar.title = "${car.brand} ${car.model}"
+                        }
+                    } else {
+                        binding.mainToolbar.title = getString(R.string.your_car_toolbar)
+                        Log.e("MainActivity", "Error loading car: ${response.errorBody()?.string()}")
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    binding.mainToolbar.title = getString(R.string.your_car_toolbar)
+                    Constants.handleNetworkError(this@MainActivity, e)
+                }
+            }
+        }
+    }
+
 }

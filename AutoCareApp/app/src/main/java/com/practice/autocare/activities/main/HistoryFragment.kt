@@ -18,8 +18,10 @@ import com.practice.autocare.api.RetrofitClient.Companion.api
 import com.practice.autocare.databinding.FragmentHistoryBinding
 import com.practice.autocare.databinding.FragmentLoginBinding
 import com.practice.autocare.models.service.ServiceEventResponse
+import com.practice.autocare.models.service.ServiceEventResponseComp
 import com.practice.autocare.util.Constants
 import com.practice.autocare.util.Constants.Companion.getUserEmail
+import com.practice.autocare.util.Constants.Companion.handleNetworkError
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,7 +32,7 @@ class HistoryFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var adapter: HistoryAdapter
-    private var services = ArrayList<ServiceEventResponse>()
+    private var services = ArrayList<ServiceEventResponseComp>()
 
     private var currentSortType = HistoryAdapter.SortType.DATE_DESC // Сортировка по умолчанию
 
@@ -126,35 +128,27 @@ class HistoryFragment : Fragment() {
             .show()
     }
 
-
-    private fun setupRecyclerView() {
-        adapter = HistoryAdapter(services)
-        binding.rViewHistory.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = this@HistoryFragment.adapter
-            setHasFixedSize(true)
-        }
-    }
-
     private fun getServices(email: String) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val response = api.getServiceEvents(email)
+                val response = api.getServiceEvents(
+                    email = email,
+                    isCompleted = true
+                )
 
                 activity?.runOnUiThread {
                     if (response.isSuccessful) {
-                        services = response.body()!!
-                        adapter = HistoryAdapter(services)
-                        binding.rViewHistory.adapter = adapter
-                        adapter.sort(currentSortType)
+                        response.body()?.let { completedServices ->
+                            services = completedServices
+                            adapter = HistoryAdapter(services)
+                            binding.rViewHistory.adapter = adapter
+                            adapter.sort(currentSortType)
 
-                        if (services.isEmpty()) {
+                            showEmptyState(services.isEmpty())
+                        } ?: run {
                             showEmptyState(true)
-                        } else {
-                            showEmptyState(false)
+                            Log.e("TAG_History", "Response body is null")
                         }
-
-//                     TODO   MAIN.navController.navigate(R.id.action_registerAutoFragment_to_CalendarFragment)
                     } else {
                         // Обработка HTTP ошибок (400, 500 и т.д.)
                         val errorMessage = response.errorBody()?.string() ?: "Get services failed"
@@ -164,29 +158,8 @@ class HistoryFragment : Fragment() {
                 }
             } catch (e: Exception) {
                 activity?.runOnUiThread {
-                    when (e) {
-                        is java.net.ConnectException -> {
-                            Toast.makeText(
-                                context,
-                                "Cannot connect to server. Please check your internet connection",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                        is java.net.SocketTimeoutException -> {
-                            Toast.makeText(
-                                context,
-                                "Connection timeout. Please try again",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                        else -> {
-                            Toast.makeText(
-                                context,
-                                "An error occurred: ${e.localizedMessage}",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    }
+                    handleNetworkError(requireContext(), e)
+                    showEmptyState(true)
                 }
             }
         }

@@ -43,7 +43,7 @@
     <string name="btn_add">Добавить запись</string>
 
     <!--  heared  -->
-    <string name="your_login_Header">Логин</string>
+    <string name="your_login_Header">Автовладелец</string>
 
 
     <!-- Названия для bottom_nav -->

@@ -7,10 +7,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.practice.autocare.R
 import com.practice.autocare.models.service.ServiceEventResponse
+import com.practice.autocare.models.service.ServiceEventResponseComp
 import java.util.Locale
 
-class HistoryAdapter(private val services: ArrayList<ServiceEventResponse>): RecyclerView.Adapter<HistoryAdapter.ViewHolderService>() {
-    private var filteredServices = ArrayList<ServiceEventResponse>(services)
+class HistoryAdapter(private val services: ArrayList<ServiceEventResponseComp>): RecyclerView.Adapter<HistoryAdapter.ViewHolderService>() {
+    private var filteredServices = ArrayList<ServiceEventResponseComp>(services)
 
     enum class SortType {
         DATE_ASC, DATE_DESC, MILEAGE_ASC, MILEAGE_DESC
@@ -31,7 +32,7 @@ class HistoryAdapter(private val services: ArrayList<ServiceEventResponse>): Rec
         val currentService = filteredServices[position]
         holder.serviceType.text = currentService.service_type
         holder.dueDate.text = currentService.due_date
-        val mileage = currentService.due_mileage.toString()
+        val mileage = "${currentService.due_mileage.toInt()} км"
         holder.DueMileage.text = mileage
     }
 
