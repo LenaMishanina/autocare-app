@@ -7,8 +7,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.practice.autocare.R
 import com.practice.autocare.models.service.ServiceEventResponse
+import java.util.Locale
 
 class HistoryAdapter(private val services: ArrayList<ServiceEventResponse>): RecyclerView.Adapter<HistoryAdapter.ViewHolderService>() {
+    private var filteredServices = ArrayList<ServiceEventResponse>(services)
+
+    enum class SortType {
+        DATE_ASC, DATE_DESC, MILEAGE_ASC, MILEAGE_DESC
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderService {
         val itemView = LayoutInflater
@@ -18,15 +24,48 @@ class HistoryAdapter(private val services: ArrayList<ServiceEventResponse>): Rec
     }
 
     override fun getItemCount(): Int {
-        return services.size
+        return filteredServices.size
     }
 
     override fun onBindViewHolder(holder: ViewHolderService, position: Int) {
-        val currentService = services[position]
+        val currentService = filteredServices[position]
         holder.serviceType.text = currentService.service_type
         holder.dueDate.text = currentService.due_date
         val mileage = currentService.due_mileage.toString()
         holder.DueMileage.text = mileage
+    }
+
+    fun filter(query: String?) {
+        filteredServices.clear()
+        if (query.isNullOrEmpty()) {
+            filteredServices.addAll(services)
+        } else {
+            val lowerCaseQuery = query.lowercase(Locale.getDefault())
+            services.forEach { service ->
+                if (service.service_type?.lowercase(Locale.getDefault())?.contains(lowerCaseQuery) == true) {
+                    filteredServices.add(service)
+                }
+            }
+        }
+        notifyDataSetChanged()
+    }
+
+    fun sort(sortType: SortType) {
+        when (sortType) {
+            SortType.DATE_ASC -> {
+                filteredServices.sortBy { it.due_date }
+            }
+            SortType.DATE_DESC -> {
+                filteredServices.sortByDescending { it.due_date }
+            }
+            SortType.MILEAGE_ASC -> {
+                filteredServices.sortBy { it.due_mileage }
+            }
+            SortType.MILEAGE_DESC -> {
+                filteredServices.sortByDescending { it.due_mileage }
+            }
+        }
+        notifyDataSetChanged()
     }
 
     class ViewHolderService(itemView: View): RecyclerView.ViewHolder(itemView) {
