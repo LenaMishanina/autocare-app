@@ -40,7 +40,10 @@ def read_root():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="192.168.0.73", port=8080, reload=True)
+    # locust
+    uvicorn.run("main:app", host="192.168.1.84", port=8080, reload=True)
+    # dass
+    # uvicorn.run("main:app", host="192.168.0.73", port=8080, reload=True)
 
 # host=
 # <cmd ->

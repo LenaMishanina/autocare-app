@@ -5,48 +5,60 @@
     android:layout_height="match_parent"
     tools:context=".activities.main.CalendarFragment">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:background="@color/white">
 
         <CalendarView
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/CalenderViewCustom"
+            android:theme="@style/CalenderViewCustom"/>
 
-            />
-        <Button
-            android:id="@+id/addEventButton"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/calendarView"
-            android:text="@string/btn_add"
-            android:textColor="@color/secondary_text_log_reg"
-            android:textStyle="bold"
-            android:layout_centerHorizontal="true"/>
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+
+            <Button
+                android:id="@+id/addEventButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_add"
+                android:textColor="@color/secondary_text_log_reg"
+                android:textStyle="bold"
+                android:layout_marginEnd="16dp"/>
+
+            <Button
+                android:id="@+id/finishDayButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Завершить день"
+                android:textColor="@color/secondary_text_log_reg"
+                android:textStyle="bold"/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/emptyListText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/addEventButton"
             android:layout_margin="16dp"
             android:gravity="center"
             android:text="Записей нет"
             android:textSize="18sp"
             android:visibility="gone"/>
 
-        <ListView
-            android:id="@+id/eventsListView"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/eventsRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/addEventButton"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:padding="4dp"
-            android:layout_margin="4dp" />
-        </RelativeLayout>
-
-
-
+            android:layout_margin="4dp"/>
+    </LinearLayout>
 </FrameLayout>

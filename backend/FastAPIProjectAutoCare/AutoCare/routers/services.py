@@ -57,7 +57,8 @@ def get_service_events(
 # GET - Retrieve all service events for the current user
 @router.get("/", response_model=list[ServiceEventResponse])
 def get_service_events(db: Session = Depends(get_db), user=Depends(get_current_user)):
-    return db.query(ServiceEvent).join(Car).filter(Car.user_id == user.user_id).all()
+    return db.query(ServiceEvent).join(Car).filter(Car.user_id == user.user_id,
+            ServiceEvent.is_completed == True).all()
 
 # DELETE - Delete a service event by ID
 @router.delete("/{service_id}")

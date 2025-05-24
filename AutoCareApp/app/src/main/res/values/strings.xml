@@ -18,6 +18,7 @@
     <string name="have_account">Уже есть аккаунт?</string>
     <!--  toast  -->
     <string name="http_error_reg_user">Некорректные данные</string>
+    <string name="http_error_service">Не удалось получить данные</string>
 
 
     <!--  fragment register auto  -->
@@ -52,5 +53,12 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="add_service">Добавить услугу</string>
+    <string name="dialog_save">Сохранить</string>
+    <string name="dialog_cancel">Отменить</string>
+    <string name="complete_day">Вы уверены, что хотите завершить день?</string>
+
 
 </resources>

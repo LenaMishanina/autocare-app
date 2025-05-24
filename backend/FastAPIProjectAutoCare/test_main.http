@@ -414,7 +414,6 @@ email: sarah@gamil.com
 POST http://localhost:8080/services/
 Content-Type: application/json
 email: dorzeaizzy@gmail.com
-
 {
   "car_id": 12,
   "service_type": "Bumper change",
@@ -434,16 +433,13 @@ email: dorzeaizzy@gmail.com
   "due_mileage": 400000
 }
 
-###
+### ДОБАВЛЕНИЕ СОБЫТИЯ В ИСТОРИЮ
 PUT http://localhost:8080/services/13
 Content-Type: application/json
 email: dorzeaizzy@gmail.com
 
 {
-  "car_id": 12,
-  "service_type": "Bumper change",
-  "due_date": "2025-04-25",
-  "due_mileage": 50000
+  "is_completed": true
 }
 
 

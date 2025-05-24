@@ -2,31 +2,47 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_start"
-    app:startDestination="@id/loginFragment">
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nav_start">
 
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.practice.autocare.activities.auth.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
-        <action
-            android:id="@+id/action_loginFragment_to_registerUserFragment"
-            app:destination="@id/registerUserFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/registerUserFragment"
-        android:name="com.practice.autocare.activities.auth.RegisterUserFragment"
-        android:label="RegisterUserFragment" >
-        <action
-            android:id="@+id/action_registerUserFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-        <action
-            android:id="@+id/action_registerUserFragment_to_registerAutoFragment"
-            app:destination="@id/registerAutoFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/registerAutoFragment"
-        android:name="com.practice.autocare.activities.auth.RegisterAutoFragment"
-        android:label="RegisterAutoFragment" />
+    <navigation
+        android:id="@+id/nav_start"
+        app:startDestination="@id/loginFragment">
+        <fragment
+            android:id="@+id/loginFragment"
+            android:name="com.practice.autocare.activities.auth.LoginFragment"
+            android:label="fragment_login"
+            tools:layout="@layout/fragment_login" >
+            <action
+                android:id="@+id/action_loginFragment_to_registerUserFragment"
+                app:destination="@id/registerUserFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/registerUserFragment"
+            android:name="com.practice.autocare.activities.auth.RegisterUserFragment"
+            android:label="RegisterUserFragment" >
+            <action
+                android:id="@+id/action_registerUserFragment_to_loginFragment"
+                app:destination="@id/loginFragment" />
+            <action
+                android:id="@+id/action_registerUserFragment_to_registerAutoFragment"
+                app:destination="@id/registerAutoFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/registerAutoFragment"
+            android:name="com.practice.autocare.activities.auth.RegisterAutoFragment"
+            android:label="RegisterAutoFragment" />
+    </navigation>
+
+    <!-- Главная активити -->
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.practice.autocare.activities.main.MainActivity"
+        android:label="MainActivity">
+
+        <argument
+            android:name="email"
+            android:defaultValue="null"
+            app:argType="string" />
+    </activity>
 </navigation>
