@@ -6,9 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.practice.autocare.R
 import com.practice.autocare.activities.adapter.HistoryAdapter
 import com.practice.autocare.api.RetrofitClient.Companion.api
@@ -29,6 +32,8 @@ class HistoryFragment : Fragment() {
     private lateinit var adapter: HistoryAdapter
     private var services = ArrayList<ServiceEventResponse>()
 
+    private var currentSortType = HistoryAdapter.SortType.DATE_DESC // Сортировка по умолчанию
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,15 +44,22 @@ class HistoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.rViewHistory.layoutManager = LinearLayoutManager(view.context)
-        binding.rViewHistory.setHasFixedSize(true)
 
-        // Инициализация RecyclerView
-//        setupRecyclerView()
+        binding.searchView.apply { // для того чтобы можно было в любое место кликнуть и начать искать
+            // Убираем стандартные отступы
+            setPadding(0, 0, 0, 0)
+            // Находим текстовое поле и делаем его растянутым
+            findViewById<EditText>(androidx.appcompat.R.id.search_src_text).apply {
+                layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
+            }
+            // Обработчик клика по всей области
+            setOnClickListener {
+                isIconified = false // Разворачиваем при любом клике
+            }
+        }
 
         binding.rViewHistory.apply {
             layoutManager = LinearLayoutManager(requireContext())
-//            adapter = this@HistoryFragment.adapter
             setHasFixedSize(true)
         }
 
@@ -58,7 +70,62 @@ class HistoryFragment : Fragment() {
             showEmptyState(true)
         }
 
+        setupSearchView()
+        // Обработчик клика по кнопке сортировки
+        binding.sortButton.setOnClickListener {
+            showSortDialog()
+        }
     }
+
+    private fun setupSearchView() {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filter(newText)
+                // Проверяем, есть ли результаты после фильтрации
+                val isEmpty = adapter.itemCount == 0
+                showEmptyState(isEmpty && !newText.isNullOrEmpty())
+                return true
+            }
+        })
+    }
+
+    private fun showSortDialog() {
+        val items = arrayOf(
+            "По дате (новые сначала)",
+            "По дате (старые сначала)",
+            "По пробегу (по возрастанию)",
+            "По пробегу (по убыванию)"
+        )
+
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Сортировка")
+            .setItems(items) { _, which ->
+                when (which) {
+                    0 -> {
+                        currentSortType = HistoryAdapter.SortType.DATE_DESC
+                        adapter.sort(currentSortType)
+                    }
+                    1 -> {
+                        currentSortType = HistoryAdapter.SortType.DATE_ASC
+                        adapter.sort(currentSortType)
+                    }
+                    2 -> {
+                        currentSortType = HistoryAdapter.SortType.MILEAGE_ASC
+                        adapter.sort(currentSortType)
+                    }
+                    3 -> {
+                        currentSortType = HistoryAdapter.SortType.MILEAGE_DESC
+                        adapter.sort(currentSortType)
+                    }
+                }
+            }
+            .setNegativeButton("Отмена", null)
+            .show()
+    }
+
 
     private fun setupRecyclerView() {
         adapter = HistoryAdapter(services)
@@ -77,19 +144,16 @@ class HistoryFragment : Fragment() {
                 activity?.runOnUiThread {
                     if (response.isSuccessful) {
                         services = response.body()!!
+                        adapter = HistoryAdapter(services)
+                        binding.rViewHistory.adapter = adapter
+                        adapter.sort(currentSortType)
 
                         if (services.isEmpty()) {
                             showEmptyState(true)
                         } else {
                             showEmptyState(false)
-                            // отображение в recycleview
-                            adapter = HistoryAdapter(services)
-                            binding.rViewHistory.adapter = this@HistoryFragment.adapter
-
                         }
 
-                        Log.d("TAG_History", "getServices ${services.toString()}")
-//                        Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
 //                     TODO   MAIN.navController.navigate(R.id.action_registerAutoFragment_to_CalendarFragment)
                     } else {
                         // Обработка HTTP ошибок (400, 500 и т.д.)
