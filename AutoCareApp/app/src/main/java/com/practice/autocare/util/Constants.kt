@@ -15,6 +15,7 @@ import java.net.SocketTimeoutException
 class Constants {
     companion object {
         const val BASE_URL = "http://192.168.1.84:8080"
+        // "http://<YOUR_IP_ADDRESS>:8080"
         lateinit var MAIN: StartActivity
 
         fun setupErrorClearingOnTextChanged(

@@ -44,6 +44,8 @@ if __name__ == "__main__":
     uvicorn.run("main:app", host="192.168.1.84", port=8080, reload=True)
     # dass
     # uvicorn.run("main:app", host="192.168.0.73", port=8080, reload=True)
+    # Lyse
+    # uvicorn.run("main:app", host="YOUR_IP_ADDRESS", port=8080, reload=True)
 
 # host=
 # <cmd ->
