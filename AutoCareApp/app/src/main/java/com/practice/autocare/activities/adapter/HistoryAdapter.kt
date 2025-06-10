@@ -11,7 +11,7 @@ import com.practice.autocare.models.service.ServiceEventResponseComp
 import java.util.Locale
 
 class HistoryAdapter(private val services: ArrayList<ServiceEventResponseComp>): RecyclerView.Adapter<HistoryAdapter.ViewHolderService>() {
-    private var filteredServices = ArrayList<ServiceEventResponseComp>(services)
+    var filteredServices = ArrayList<ServiceEventResponseComp>(services)
 
     enum class SortType {
         DATE_ASC, DATE_DESC, MILEAGE_ASC, MILEAGE_DESC
