@@ -1,0 +1,56 @@
+version: '3.9'
+
+services:
+  web:
+    build: .
+    container_name: AutoCare-api
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./app:/app/app
+    environment:
+#      - DATABASE_URL=postgresql://lysedorzea:1234@192.168.0.181:5432/AutoCare
+        - DATABASE_URL=postgresql://postgres:Fa4bixe@host.docker.internal:5432/AutoCare
+
+    depends_on:
+      - db
+
+  db:
+    image: postgres:17
+    container_name: AutoCare-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Fa4bixe
+      POSTGRES_DB: AutoCare
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d AutoCare  "]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+
+
+volumes:
+  postgres_data:
+
+
+
+
+
+# docker compose down
+# docker compose up --build
+# docker run --rm image_name
+# http://127.0.0.1:8080/docs
+
+#pg_dump -U lysedorzea -d AutoCare --data-only > dump_data.sql
+#docker cp dump.sql AutoCare-db:/dump.sql
+#docker exec -it AutoCare-db psql -U lysedorzea -d AutoCare -f /dump.sql
+
+
+#docker exec -it AutoCare-db psql -U lysedorzea -c "DROP DATABASE AutoCare;"
+#docker exec -it AutoCare-db psql -U lysedorzea -c "CREATE DATABASE AutoCare;"

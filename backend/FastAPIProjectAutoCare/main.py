@@ -41,7 +41,7 @@ def read_root():
 if __name__ == "__main__":
     import uvicorn
     # locust
-    uvicorn.run("main:app", host="192.168.1.84", port=8080, reload=True)
+    uvicorn.run("main:app", host="localhost", port=8080, reload=True)
     # dass
     # uvicorn.run("main:app", host="192.168.0.73", port=8080, reload=True)
     # Lyse
